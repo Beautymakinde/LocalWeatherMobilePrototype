@@ -1,0 +1,10 @@
+{
+  "description": "Provides Chicago residents live, detailed weather insights to make informed decisions about clothing and outdoor plans with real-time data and forecasts.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
