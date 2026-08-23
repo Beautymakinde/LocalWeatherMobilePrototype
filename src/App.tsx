@@ -272,7 +272,8 @@ export default function App() {
   const [unit, setUnit] = useState<Unit>('F');
   const [phase, setPhase] = useState<Phase>('requesting');
   const [loc, setLoc] = useState<Loc>(CHICAGO);
-  const [locDenied, setLocDenied] = useState(false);
+  const [locDenied, setLocDenied] = useState(false)
+  const [userTriedLocation, setUserTriedLocation] = useState(false);
   const [weather, setWeather] = useState<Weather | null>(null);
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -380,6 +381,7 @@ export default function App() {
 
   function requestCurrentLoc() {
     setShowSearch(false);
+    setUserTriedLocation(true);
     if (!navigator.geolocation) {
       setLocDenied(true);
       return;
@@ -442,7 +444,7 @@ export default function App() {
     <div className="min-h-screen bg-[#EDEEF0] font-sans text-[#0D0F14] max-w-[430px] mx-auto relative">
 
       {/* ── HEADER ─────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-10 bg-[#EDEEF0]">
+      <header className="sticky top-0 z-10 bg-[#EDEEF0]" style={{ paddingTop: 'max(env(safe-area-inset-top), 50px)' }}>
         <div className="flex items-center px-4 h-[52px] gap-1">
 
           {/* Location button */}
@@ -541,8 +543,8 @@ export default function App() {
 
           <div className={refreshing ? 'opacity-60 transition-opacity duration-200' : 'transition-opacity duration-200'}>
 
-            {/* Context notices — in content flow, not sticky header */}
-            {locDenied && (
+            {/* Context notices — only shown when user actively requested location */}
+            {locDenied && userTriedLocation && (
               <div className="flex items-center gap-2 px-6 pt-3 pb-0">
                 <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
                   <circle cx="5.5" cy="5.5" r="4.5" stroke="#94A3B8" strokeWidth="1" />
